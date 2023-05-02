@@ -1,0 +1,53 @@
+﻿<Window x:Class="Module__10.WindowConsultant"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Module__10"
+        mc:Ignorable="d"
+        Title="WindowConsultant" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="0.1*"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        
+        
+        <ListBox x:Name="ClientSpisok" Grid.Column="0" Grid.Row="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" SelectionChanged="ClientSpisok_SelectionChanged" >
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderThickness="2" BorderBrush="Black" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                        <StackPanel x:Name="FIO" Height="80" Width="200">
+                            <TextBlock x:Name="FirstName" Text="{Binding FirstName }" Margin="3"  FontSize="20" />
+                            <TextBlock x:Name="LastName" Text="{Binding  LastName}" Margin="3"  FontSize="15" />
+                        </StackPanel>
+                    </Border>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <GroupBox x:Name="FullInfo" Grid.Column="1" Grid.Row="0" >
+            <StackPanel>
+                <TextBlock x:Name="FirstName" Text="{Binding ElementName=ClientSpisok ,StringFormat= Имя: {0}, Path = SelectedItem.FirstName }" Margin="3"  FontSize="15" />
+                <TextBlock x:Name="LastName" Text="{Binding  ElementName=ClientSpisok,StringFormat= Фамилия: {0}, Path = SelectedItem.LastName}" Margin="3"  FontSize="15" />
+                <TextBlock x:Name="FatherName" Text="{Binding ElementName=ClientSpisok,StringFormat=Отчество: {0}, Path=SelectedItem.FatherName}" Margin="3" FontSize="15"/>
+                <TextBlock x:Name="PhoneNumber" Text="{Binding ElementName=ClientSpisok, StringFormat=Номер телефона: {0}, Path=SelectedItem.PhoneNumber, UpdateSourceTrigger=PropertyChanged}" Margin="3" FontSize="15"/>
+                <TextBlock x:Name="PassportData" Text="{Binding ElementName=ClientSpisok,StringFormat=Паспортные данные: {0}, Path=SelectedItem.PassportData, UpdateSourceTrigger=PropertyChanged}" Margin="3" FontSize="15"/>
+                <TextBlock x:Name="DateOfChange" Text="{Binding ElementName=ClientSpisok,StringFormat=Дата изменения: {0}, Path=SelectedItem.DateOfChange, UpdateSourceTrigger=PropertyChanged}" Margin="3" FontSize="15" Visibility="Collapsed"/>
+                <TextBlock x:Name="WhoChanged" Text="{Binding ElementName=ClientSpisok,StringFormat=Кто изменил: {0}, Path=SelectedItem.WhoChanged, UpdateSourceTrigger=PropertyChanged}" Margin="3" FontSize="15" Visibility="Collapsed"/>
+                <TextBlock x:Name="Title" Text="Что было изменено:" Margin="3" FontSize="15" Visibility="Collapsed"/>
+                <ListBox x:Name="WhatChanged" Margin="3" FontSize="15" ItemsSource="{Binding ElementName=ClientSpisok, Path=SelectedItem.WhatChanged, UpdateSourceTrigger=PropertyChanged}" Visibility="Collapsed" IsHitTestVisible="False" BorderThickness="0" />
+                <Button x:Name="ButtonChangePhoneNumber" Content="изменить" Visibility="Collapsed" Click="ButtonChangePhoneNumber_Click" />
+                <TextBox x:Name="NewPhone"  Text="{Binding ElementName=ClientSpisok, Path=SelectedItem.PhoneNumber, Mode=OneWay}" Visibility="Collapsed" GotFocus="NewPhone_GotFocus"/>
+                <Button x:Name="ButtonSave" Content="Сохранить" Visibility="Collapsed" Click="ButtonSave_Click"/>
+                <Button x:Name="ButtonDiscard" Content="Отменить" Visibility="Collapsed" Click="ButtonDiscard_Click"/>
+            </StackPanel>
+        </GroupBox>
+        <Button x:Name="ButtonBack" Grid.Row="1" Grid.Column="0" Content="Назад" Click="ButtonBack_Click" />
+    </Grid>
+</Window>
